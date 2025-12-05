@@ -47,61 +47,96 @@ section {
     z-index: 2;
 }
 
-/* --- NAVIGATION UPDATES --- */
+/* --- NAVIGATION --- */
 nav { 
     position: fixed; top: 0; left: 0; width: 100%;
-    /* We keep the padding for the links, but the logo will break out of it */
-    padding: 20px 40px; 
+    /* Increased height to accommodate the bigger sign */
+    height: 120px; 
+    padding: 0 40px; 
     display: flex; justify-content: flex-end; /* Pushes links to the right */
     align-items: center; 
     z-index: 100;
     background: linear-gradient(to bottom, rgba(26,18,15,0.95), transparent);
-    height: 100px; /* Give the nav some height so the sign doesn't overlap text below */
 }
 
-/* The Logo Container */
+/* The Logo Container (Anchor Point) */
 .nav-logo { 
-    position: absolute; /* Takes it out of the flex flow */
-    top: -5px; /* Pulls it up to the very ceiling */
-    left: 40px; /* Matches your original left padding */
+    position: absolute; 
+    top: -5px; /* Touching the ceiling */
+    left: 40px; 
     z-index: 101;
+    pointer-events: none; /* Allows clicking through the empty rope areas */
 }
 
-/* The Swinging Animation */
+.nav-logo a {
+    pointer-events: auto; /* Re-enable clicking on the sign itself */
+}
+
+/* The Swinging Animation & Size */
 .swinging-sign {
-    height: 130px; /* Adjust this to make the sign bigger/smaller */
+    /* FIX: Increased size for Desktop */
+    height: 220px; 
     width: auto;
     
-    /* THE PHYSICS ENGINE */
-    /* Sets the pivot point to the top-center of the image (the rope knot) */
-    transform-origin: 50% 0; 
-    
-    /* The Swing: 4 seconds, ease-in-out (slow start/stop), infinite loop */
+    transform-origin: 50% 0; /* Pivot from top center */
     animation: gentleSwing 4s ease-in-out infinite alternate;
-    
-    /* Adds a shadow behind the sign so it pops off the background */
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
-    
-    /* Smooth hover effect (stops swinging when you mouse over it) */
     transition: transform 0.3s;
 }
 
-/* Pause swing on hover so it's easier to click */
-.swinging-sign:hover {
-    animation-play-state: paused;
-}
+.swinging-sign:hover { animation-play-state: paused; }
 
-/* Keyframes for the pendulum motion */
 @keyframes gentleSwing {
     0% { transform: rotate(2deg); }
     100% { transform: rotate(-2deg); }
 }
 
-/* Mobile Tweak: Make sign smaller on phones */
+/* LINKS STYLING */
+.nav-links {
+    display: flex;
+    gap: 30px; /* Space between links */
+}
+
+/* FIX: Force color to stay Crema (overrides default blue/purple links) */
+.nav-links a, 
+.nav-links a:visited, 
+.nav-links a:active { 
+    color: var(--crema) !important; 
+    text-decoration: none; 
+    font-size: 1.1rem; 
+    transition: color 0.3s; 
+    cursor: pointer; 
+    font-weight: bold;
+    letter-spacing: 1px;
+}
+
+.nav-links a:hover { 
+    color: var(--ember-orange) !important; 
+}
+
+/* --- MOBILE TWEAKS --- */
 @media (max-width: 900px) {
-    .swinging-sign { height: 90px; }
-    .nav-logo { left: 20px; }
-    nav { padding: 20px; }
+    /* Adjust sign size for mobile */
+    .swinging-sign { height: 110px; }
+    
+    .nav-logo { left: 10px; }
+    
+    nav { 
+        padding: 0 15px; 
+        height: 90px;
+    }
+    
+    /* FIX: Prevent Overlap on Mobile */
+    .nav-links {
+        /* Pushes links further right/down if needed, but mostly ensures
+           they don't bleed into the left side where the sign is. */
+        margin-left: 120px; /* Creates a "No Fly Zone" for the sign */
+        gap: 15px; /* Tighter spacing for links */
+    }
+    
+    .nav-links a {
+        font-size: 0.9rem; /* Slightly smaller text for phone screens */
+    }
 }
 
 /* --- SCROLL HINT --- */
@@ -208,4 +243,5 @@ input:focus, textarea:focus { border-bottom-style: solid; border-bottom-color: v
     h1 { font-size: 3rem; }
     section { min-height: auto; padding: 100px 20px; }
 }
+
 

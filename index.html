@@ -135,12 +135,28 @@
                         
                         <p class="email-display">hawkinsvasteven@gmail.com</p>
 
-                        <form>
-                            <div class="form-group"><label>Name</label><input type="text"></div>
-                            <div class="form-group"><label>Email</label><input type="email"></div>
-                            <div class="form-group"><label>Message</label><textarea rows="3"></textarea></div>
+                        <form name="contact" method="POST" data-netlify="true" action="/success">
+                            
+                            <input type="hidden" name="form-name" value="contact">
+
+                            <div class="form-group">
+                                <label>Name</label>
+                                <input type="text" name="name" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Email</label>
+                                <input type="email" name="email" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Message</label>
+                                <textarea rows="3" name="message" required></textarea>
+                            </div>
+                            
                             <button type="submit" class="submit-btn">Sign Book</button>
                         </form>
+
                         <div class="socials contact-socials" style="display: flex; gap: 20px; margin-top: 40px; justify-content: center;">
                             <a href="https://www.youtube.com/channel/UCHvcKP5KtvflC5QA2YqxDeQ" target="_blank" class="social-link" style="font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;"><i class="fab fa-youtube"></i></a>
                             <a href="https://x.com/HawkVA_" target="_blank" class="social-link" style="font-size: 1.2rem; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none;"><i class="fab fa-twitter"></i></a> 
@@ -156,4 +172,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

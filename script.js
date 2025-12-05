@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusText = document.getElementById('status-text');
     const iceGrid = document.getElementById('ice-grid');
 
-    // --- ICONS GENERATOR ---
+    // ICONS
     const icons = ['fa-music', 'fa-headphones', 'fa-microphone', 'fa-mug-hot', 'fa-fire', 'fa-tv', 'fa-star'];
     function shuffle(array) {
         for (let i = array.length - 1; i > 0; i--) {
@@ -19,10 +19,10 @@ document.addEventListener('DOMContentLoaded', () => {
         iceGrid.appendChild(div);
     });
 
-    // --- TYPEWRITER EFFECT ---
+    // TYPEWRITER (Updated with '!')
     const drinkOptions = ["Latte", "Affogato", "Macchiato", "Coffee", "Espresso", "Cortado", "Cold Brew"];
     const randomDrink = drinkOptions[Math.floor(Math.random() * drinkOptions.length)];
-    const sentence = "Serving you a fresh " + randomDrink + "...";
+    const sentence = "Serving you a fresh " + randomDrink + "!";
     let i = 0;
     function typeWriter() {
         if (i < sentence.length) {
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     typeWriter();
 
-    // --- BACKGROUND EMBERS ---
+    // EMBERS
     const emberContainer = document.getElementById('embers');
     for(let j=0; j<30; j++) {
         let dot = document.createElement('div');

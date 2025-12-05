@@ -47,17 +47,62 @@ section {
     z-index: 2;
 }
 
-/* --- NAVIGATION --- */
+/* --- NAVIGATION UPDATES --- */
 nav { 
     position: fixed; top: 0; left: 0; width: 100%;
+    /* We keep the padding for the links, but the logo will break out of it */
     padding: 20px 40px; 
-    display: flex; justify-content: space-between; align-items: center; 
+    display: flex; justify-content: flex-end; /* Pushes links to the right */
+    align-items: center; 
     z-index: 100;
     background: linear-gradient(to bottom, rgba(26,18,15,0.95), transparent);
+    height: 100px; /* Give the nav some height so the sign doesn't overlap text below */
 }
-.nav-logo { font-weight: bold; color: var(--ember-orange); font-family: 'Patrick Hand', cursive; letter-spacing: 2px; font-size: 1.5rem; }
-.nav-links a { color: var(--crema); text-decoration: none; margin-left: 20px; font-size: 1rem; transition: color 0.3s; cursor: pointer; }
-.nav-links a:hover { color: var(--ember-orange); }
+
+/* The Logo Container */
+.nav-logo { 
+    position: absolute; /* Takes it out of the flex flow */
+    top: -5px; /* Pulls it up to the very ceiling */
+    left: 40px; /* Matches your original left padding */
+    z-index: 101;
+}
+
+/* The Swinging Animation */
+.swinging-sign {
+    height: 130px; /* Adjust this to make the sign bigger/smaller */
+    width: auto;
+    
+    /* THE PHYSICS ENGINE */
+    /* Sets the pivot point to the top-center of the image (the rope knot) */
+    transform-origin: 50% 0; 
+    
+    /* The Swing: 4 seconds, ease-in-out (slow start/stop), infinite loop */
+    animation: gentleSwing 4s ease-in-out infinite alternate;
+    
+    /* Adds a shadow behind the sign so it pops off the background */
+    filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+    
+    /* Smooth hover effect (stops swinging when you mouse over it) */
+    transition: transform 0.3s;
+}
+
+/* Pause swing on hover so it's easier to click */
+.swinging-sign:hover {
+    animation-play-state: paused;
+}
+
+/* Keyframes for the pendulum motion */
+@keyframes gentleSwing {
+    0% { transform: rotate(2deg); }
+    100% { transform: rotate(-2deg); }
+}
+
+/* Mobile Tweak: Make sign smaller on phones */
+@media (max-width: 900px) {
+    .swinging-sign { height: 90px; }
+    .nav-logo { left: 20px; }
+    nav { padding: 20px; }
+}
 
 /* --- SCROLL HINT --- */
 .scroll-hint {
@@ -163,3 +208,4 @@ input:focus, textarea:focus { border-bottom-style: solid; border-bottom-color: v
     h1 { font-size: 3rem; }
     section { min-height: auto; padding: 100px 20px; }
 }
+

@@ -50,7 +50,6 @@ section {
 /* --- NAVIGATION --- */
 nav { 
     position: fixed; top: 0; left: 0; width: 100%;
-    /* Increased height to accommodate the bigger sign */
     height: 120px; 
     padding: 0 40px; 
     display: flex; justify-content: flex-end; /* Pushes links to the right */
@@ -62,45 +61,48 @@ nav {
 /* The Logo Container (Anchor Point) */
 .nav-logo { 
     position: absolute; 
-    top: -5px; /* Touching the ceiling */
+    top: -5px; 
     left: 40px; 
     z-index: 101;
-    pointer-events: none; /* Allows clicking through the empty rope areas */
+    pointer-events: none; 
+    /* Fix for blurriness during rotation */
+    -webkit-font-smoothing: antialiased;
 }
 
-.nav-logo a {
-    pointer-events: auto; /* Re-enable clicking on the sign itself */
-}
+.nav-logo a { pointer-events: auto; }
 
-/* The Swinging Animation & Size */
+/* The Swinging Animation */
 .swinging-sign {
-    /* FIX: Increased size for Desktop */
     height: 220px; 
     width: auto;
     
-    transform-origin: 50% 0; /* Pivot from top center */
-    animation: gentleSwing 4s ease-in-out infinite alternate;
+    transform-origin: 50% 0; 
+    /* Speed updated to 3s (faster than 4s) */
+    animation: gentleSwing 3s ease-in-out infinite alternate;
+    
     filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
-    transition: transform 0.3s;
+    
+    /* These lines fix the jagged edges/blur during animation */
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    transform: translateZ(0);
+    will-change: transform;
 }
 
-.swinging-sign:hover { animation-play-state: paused; }
-
+/* Keyframes */
 @keyframes gentleSwing {
-    0% { transform: rotate(2deg); }
-    100% { transform: rotate(-2deg); }
+    0% { transform: rotate(3deg) translateZ(0); }
+    100% { transform: rotate(-3deg) translateZ(0); }
 }
 
 /* LINKS STYLING */
 .nav-links {
     display: flex;
-    gap: 30px; /* Space between links */
+    gap: 30px; 
 }
 
-/* FIX: Force color to stay Crema (overrides default blue/purple links) */
-.nav-links a, 
-.nav-links a:visited, 
-.nav-links a:active { 
+/* Force Link Colors */
+.nav-links a, .nav-links a:visited, .nav-links a:active { 
     color: var(--crema) !important; 
     text-decoration: none; 
     font-size: 1.1rem; 
@@ -110,13 +112,11 @@ nav {
     letter-spacing: 1px;
 }
 
-.nav-links a:hover { 
-    color: var(--ember-orange) !important; 
-}
+.nav-links a:hover { color: var(--ember-orange) !important; }
 
 /* --- MOBILE TWEAKS --- */
 @media (max-width: 900px) {
-    /* Adjust sign size for mobile */
+    /* Smaller sign on mobile */
     .swinging-sign { height: 110px; }
     
     .nav-logo { left: 10px; }
@@ -126,17 +126,15 @@ nav {
         height: 90px;
     }
     
-    /* FIX: Prevent Overlap on Mobile */
+    /* Mobile Layout Fix */
     .nav-links {
-        /* Pushes links further right/down if needed, but mostly ensures
-           they don't bleed into the left side where the sign is. */
-        margin-left: 120px; /* Creates a "No Fly Zone" for the sign */
-        gap: 15px; /* Tighter spacing for links */
+        /* Ensure links stay far right so sign doesn't overlap 'DEMOS' */
+        gap: 15px; 
+        width: 100%;
+        justify-content: flex-end; /* Force right alignment */
     }
     
-    .nav-links a {
-        font-size: 0.9rem; /* Slightly smaller text for phone screens */
-    }
+    .nav-links a { font-size: 0.9rem; }
 }
 
 /* --- SCROLL HINT --- */
@@ -243,5 +241,6 @@ input:focus, textarea:focus { border-bottom-style: solid; border-bottom-color: v
     h1 { font-size: 3rem; }
     section { min-height: auto; padding: 100px 20px; }
 }
+
 
 
